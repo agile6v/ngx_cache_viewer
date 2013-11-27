@@ -116,7 +116,13 @@ Sample configuration (separate location syntax)
             }
         }
     }
-    
+ 
+
+Declaration
+========
+This README template copy from [ngx_cache_purge][] module and make a little modification.
+
+
 See also
 ========
 - [ngx_cache_purge][]
