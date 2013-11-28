@@ -84,7 +84,7 @@ Sets area and key used for viewing selected pages from `uWSGI`'s cache.
 Sample configuration (same location syntax)
 ===========================================
     http {
-        proxy_cache_path  /tmp/cache  keys_zone=tmpcache:10m;
+        proxy_cache_path  /tmp/cache  keys_zone=tmpcache:10m max_size=1g;
 
         server {
             location / {
@@ -100,7 +100,7 @@ Sample configuration (same location syntax)
 Sample configuration (separate location syntax)
 ===============================================
     http {
-        proxy_cache_path  /tmp/cache  keys_zone=tmpcache:10m;
+        proxy_cache_path  /tmp/cache  keys_zone=tmpcache:10m max_size=1g;
 
         server {
             location / {
@@ -116,7 +116,47 @@ Sample configuration (separate location syntax)
             }
         }
     }
- 
+    
+Sample Output
+===============================================
+```bash
+
+$ curl http://127.0.0.1:8000/003 -X VIEWER
+################## share memory ##################
+name:             tmpcache
+mem size(Kb):     10240
+cache node count: 3
+cache path:       /tmp/cache
+disk blocks:      262144
+used disk blocks: 3
+disk block size:  4096
+inactive time(s): 600
+-------------------------------------------
+filename:         /tmp/cache/f16f9677cebace31cfe18821d4da093e
+valid_sec:        0
+count:            1
+uses:             3
+expire(UTC):      1385640959
+body_start:       340
+fs_size(block):   1
+exists:           1
+updating:         0
+deleting:         0
+
+
+$ curl http://127.0.0.1:8000/ -X VIEWER
+################## share memory ##################
+name:             tmpcache
+mem size(Kb):     10240
+cache node count: 3
+cache path:       /tmp/cache
+disk blocks:      262144
+used disk blocks: 3
+disk block size:  4096
+inactive time(s): 600
+-------------------------------------------
+
+```
 
 Declaration
 ========
